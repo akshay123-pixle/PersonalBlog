@@ -68,30 +68,42 @@
                         
                     </div>
                 </div>
-                <p>Leave your comment...</p>
-                <form method="post" action="{% url 'comment' posts.id %}" > 
-                    {% comment %} #action="{% url 'comment' post.id %} {% endcomment %}
-                    {% csrf_token %}
-                    <label for="comment-text">Comment</label>
-                    <input type="text" name="text" id="comment-text" class="form-control" style="width: 20%; display: inline-block;" required>
-                    <button type="submit" style="display: inline-block; vertical-align: top;">Reply</button>
-                   
-                </form>
-                <div class="comments-section">
-                    {% if comments %}
-                        <ul>
-                            {% for comment in comments %}
-                                <li>Reply from <strong>{{comment.name}}</strong>:{{comment.text}} on {{comment.post_date | date:"F d, Y"}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>No comments yet.</p>
-                    {% endif %}
+                <div class="container">
+                    <p>Leave your comment...</p>
+                    <form method="post" action="{% url 'comment' posts.id %}" style="margin-bottom: 20px;">
+                        {% csrf_token %}
+                        <label for="comment-text">Comment</label>
+                        <input type="text" name="text" id="comment-text" class="form-control" style="width: 20%; display: inline-block; vertical-align: top; margin-right: 10px;" required>
+                        <button type="submit" class="btn btn-primary" style="display: inline-block; vertical-align: top; margin-top: -5px; height: 50px;;">Reply</button>
+                    </form>
+                    <div class="comments-section">
+                        {% if comments %}
+                            <ul style="list-style-type: none; padding: 0;">
+                                {% for comment in comments %}
+                                <li style="margin-bottom: 15px; padding: 8px; border: 1px solid #e1e1e1; border-radius: 5px; background-color: #f9f9f9; width: 30%;">
+                                        <div style="margin-bottom: 5px;">
+                                            <strong style="color: #007bff;">{{ comment.name }}</strong> 
+                                            <span style="color: #888; font-size: 0.9em;">on {{ comment.post_date | date:"F d, Y" }}</span>
+                                        </div>
+                                        <div>{{ comment.text }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p style="color: #888;">No comments yet.</p>
+                        {% endif %}
+                    
                 </div>
 
-            
-
-
+                {% comment %} <form action="{% url 'blogpost_like' posts.id %}" method="POST">
+                    {% csrf_token %}
+                
+                    {% if post_is_liked %}
+                    <button type="submit" name="blogpost_id" value="{{posts.id}}" class="btn btn-info">Unlike</button>
+                    {% else %}
+                    <button type="submit" name="blogpost_id" value="{{posts.id}}" class="btn btn-info">Like</button>
+                    {% endif %}
+                  </form> {% endcomment %}
 
             </div>
         </article>

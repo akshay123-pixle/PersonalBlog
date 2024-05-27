@@ -8,6 +8,10 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes =models.ManyToManyField(User,related_name="blogpost_like")
+
+    def number_of_likes(self):
+        return self.likes.count()
 
 
     class Meta:

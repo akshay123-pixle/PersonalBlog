@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from .models import Post,Contact,Comment
@@ -51,5 +53,18 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'contact.html', {'form': form})
+
+
+# def BlogPostLike(request, pk):
+#     post = get_object_or_404(Post, id=request.POST.get('blogpost_id'))
+#     if post.likes.filter(id=request.user.id).exists():
+#         post.likes.remove(request.user)
+#         print("Liked a post")
+#     else:
+#         post.likes.add(request.user)
+#         print("DisLiked a post")
+
+
+#     return HttpResponseRedirect(reverse('post', args=[pk]))
 
 
