@@ -9,6 +9,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes =models.ManyToManyField(User,related_name="blogpost_like")
+    dislikes = models.ManyToManyField(User, related_name='disliked_posts', blank=True)
 
     def number_of_likes(self):
         return self.likes.count()
@@ -18,7 +19,7 @@ class Post(models.Model):
         ordering=['created_at']
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
 class Comment(models.Model):
     name = models.CharField(max_length=100)
